@@ -5,6 +5,7 @@ type searchRecentlyKeywordType = {
     recentlyKeyword: string[]
     setRecentlyKeyword: (search: string) => void
     clearSearchHistory: () => void;
+    clearOneSearchHistory: (search: string) => void;
 }
 type searchStateType = {
     keyword: string
@@ -31,6 +32,11 @@ const useSearchRecentlyKeyword = create<searchRecentlyKeywordType>()(
                     return { recentlyKeyword: newHistory };
                 }),
             clearSearchHistory: () => set({ recentlyKeyword: [] }),
+            clearOneSearchHistory: (search: string) =>
+                set((state) => {
+                    const newHistory = state.recentlyKeyword.filter((el) => el !== search);
+                    return { recentlyKeyword: newHistory };
+                }),
         }),
         {
             name: 'search-keyword',

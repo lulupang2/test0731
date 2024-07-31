@@ -3,13 +3,18 @@ import { useSearchRecentlyKeyword, useSearchStateStore } from "@/store";
 import Image from "next/image";
 
 export default function SearchRecently() {
-  const { recentlyKeyword, clearSearchHistory } = useSearchRecentlyKeyword();
+  const { recentlyKeyword, clearSearchHistory, clearOneSearchHistory } =
+    useSearchRecentlyKeyword();
   const { setSearchKeyword } = useSearchStateStore();
   const { setParams } = useQueryParams();
   const handleClick = (keyword: string) => {
     setParams(keyword);
     setSearchKeyword(keyword);
   };
+  const handleDelete = (keyword: string) => {
+    clearOneSearchHistory(keyword);
+  };
+
   return (
     <div className="px-4">
       <div className="flex flex-row justify-between items-center">
@@ -28,6 +33,7 @@ export default function SearchRecently() {
               width={12}
               height={12}
               alt="delete"
+              onClick={() => handleDelete(el)}
             />
           </div>
         ))}
